@@ -2,13 +2,13 @@ name: Daily Node App Workflow
 
 on:
   schedule:
-    - cron: '0 0 * * *'  # Runs at 00:00 UTC every day
-  workflow_dispatch:     # Optional: allows manual triggering
+    - cron: '0 0 * * *'  # Runs daily at 00:00 UTC
+  workflow_dispatch:     # Optional manual trigger
 
 jobs:
   build-and-run:
     runs-on: ubuntu-latest
-    timeout-minutes: 360  # Max duration: 6 hours
+    timeout-minutes: 360  # Maximum job duration (6 hours)
 
     steps:
       - name: 🔄 Checkout repository
@@ -24,6 +24,9 @@ jobs:
 
       - name: 🔧 Build the project
         run: npm run build
+
+      - name: 📥 Install Playwright Browsers
+        run: npx playwright install
 
       - name: 🚀 Start the script
         run: npm run start
